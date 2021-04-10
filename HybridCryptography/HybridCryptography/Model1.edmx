@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="admin_table">
+          <Key>
+            <PropertyRef Name="admin_ID" />
+          </Key>
+          <Property Name="admin_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="admin_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="admin_password" Type="nvarchar" MaxLength="50" />
+          <Property Name="document_ID" Type="int" />
+          <Property Name="admin_loginDate" Type="nvarchar" MaxLength="20" />
+          <Property Name="admin_createdDate" Type="nvarchar" MaxLength="20" />
+          <Property Name="admin_email" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="document_table">
+          <Key>
+            <PropertyRef Name="document_ID" />
+          </Key>
+          <Property Name="document_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="document_content" Type="varbinary(max)" />
+          <Property Name="document_created_date" Type="nvarchar" MaxLength="50" />
+          <Property Name="document_extension" Type="nvarchar" MaxLength="50" />
+          <Property Name="user_ID" Type="int" />
+          <Property Name="document_keyAes" Type="nvarchar(max)" />
+          <Property Name="document_keyDes" Type="nvarchar(max)" />
+          <Property Name="document_keyRc2" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="user_table">
+          <Key>
+            <PropertyRef Name="user_ID" />
+          </Key>
+          <Property Name="user_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="user_password" Type="nvarchar" MaxLength="50" />
+          <Property Name="user_loginDate" Type="nvarchar" MaxLength="20" />
+          <Property Name="user_createdDate" Type="nvarchar" MaxLength="20" />
+          <Property Name="user_email" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_admin_table_document_table">
+          <End Role="document_table" Type="Self.document_table" Multiplicity="0..1" />
+          <End Role="admin_table" Type="Self.admin_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="document_table">
+              <PropertyRef Name="document_ID" />
+            </Principal>
+            <Dependent Role="admin_table">
+              <PropertyRef Name="document_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_document_table_user_table">
+          <End Role="user_table" Type="Self.user_table" Multiplicity="0..1" />
+          <End Role="document_table" Type="Self.document_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_table">
+              <PropertyRef Name="user_ID" />
+            </Principal>
+            <Dependent Role="document_table">
+              <PropertyRef Name="user_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="admin_table" EntityType="Self.admin_table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="document_table" EntityType="Self.document_table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user_table" EntityType="Self.user_table" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_admin_table_document_table" Association="Self.FK_admin_table_document_table">
+            <End Role="document_table" EntitySet="document_table" />
+            <End Role="admin_table" EntitySet="admin_table" />
+          </AssociationSet>
+          <AssociationSet Name="FK_document_table_user_table" Association="Self.FK_document_table_user_table">
+            <End Role="user_table" EntitySet="user_table" />
+            <End Role="document_table" EntitySet="document_table" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="admin_table">
+          <Key>
+            <PropertyRef Name="admin_ID" />
+          </Key>
+          <Property Name="admin_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="admin_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="admin_password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="document_ID" Type="Int32" />
+          <NavigationProperty Name="document_table" Relationship="Self.FK_admin_table_document_table" FromRole="admin_table" ToRole="document_table" />
+          <Property Name="admin_loginDate" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="admin_createdDate" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="admin_email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="document_table">
+          <Key>
+            <PropertyRef Name="document_ID" />
+          </Key>
+          <Property Name="document_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="document_content" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="document_created_date" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="document_extension" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_ID" Type="Int32" />
+          <NavigationProperty Name="admin_table" Relationship="Self.FK_admin_table_document_table" FromRole="document_table" ToRole="admin_table" />
+          <NavigationProperty Name="user_table" Relationship="Self.FK_document_table_user_table" FromRole="document_table" ToRole="user_table" />
+          <Property Name="document_keyAes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="document_keyDes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="document_keyRc2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="user_table">
+          <Key>
+            <PropertyRef Name="user_ID" />
+          </Key>
+          <Property Name="user_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="user_password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="document_table" Relationship="Self.FK_document_table_user_table" FromRole="user_table" ToRole="document_table" />
+          <Property Name="user_loginDate" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="user_createdDate" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="user_email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_admin_table_document_table">
+          <End Role="document_table" Type="Self.document_table" Multiplicity="0..1" />
+          <End Role="admin_table" Type="Self.admin_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="document_table">
+              <PropertyRef Name="document_ID" />
+            </Principal>
+            <Dependent Role="admin_table">
+              <PropertyRef Name="document_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_document_table_user_table">
+          <End Role="user_table" Type="Self.user_table" Multiplicity="0..1" />
+          <End Role="document_table" Type="Self.document_table" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_table">
+              <PropertyRef Name="user_ID" />
+            </Principal>
+            <Dependent Role="document_table">
+              <PropertyRef Name="user_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Hybrid_CryptographyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="admin_table" EntityType="Self.admin_table" />
+          <EntitySet Name="document_table" EntityType="Self.document_table" />
+          <EntitySet Name="user_table" EntityType="Self.user_table" />
+          <AssociationSet Name="FK_admin_table_document_table" Association="Self.FK_admin_table_document_table">
+            <End Role="document_table" EntitySet="document_table" />
+            <End Role="admin_table" EntitySet="admin_table" />
+          </AssociationSet>
+          <AssociationSet Name="FK_document_table_user_table" Association="Self.FK_document_table_user_table">
+            <End Role="user_table" EntitySet="user_table" />
+            <End Role="document_table" EntitySet="document_table" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Hybrid_CryptographyEntities">
+          <EntitySetMapping Name="admin_table">
+            <EntityTypeMapping TypeName="Model.admin_table">
+              <MappingFragment StoreEntitySet="admin_table">
+                <ScalarProperty Name="admin_email" ColumnName="admin_email" />
+                <ScalarProperty Name="admin_createdDate" ColumnName="admin_createdDate" />
+                <ScalarProperty Name="admin_loginDate" ColumnName="admin_loginDate" />
+                <ScalarProperty Name="admin_ID" ColumnName="admin_ID" />
+                <ScalarProperty Name="admin_name" ColumnName="admin_name" />
+                <ScalarProperty Name="admin_password" ColumnName="admin_password" />
+                <ScalarProperty Name="document_ID" ColumnName="document_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="document_table">
+            <EntityTypeMapping TypeName="Model.document_table">
+              <MappingFragment StoreEntitySet="document_table">
+                <ScalarProperty Name="document_keyRc2" ColumnName="document_keyRc2" />
+                <ScalarProperty Name="document_keyDes" ColumnName="document_keyDes" />
+                <ScalarProperty Name="document_keyAes" ColumnName="document_keyAes" />
+                <ScalarProperty Name="document_ID" ColumnName="document_ID" />
+                <ScalarProperty Name="document_content" ColumnName="document_content" />
+                <ScalarProperty Name="document_created_date" ColumnName="document_created_date" />
+                <ScalarProperty Name="document_extension" ColumnName="document_extension" />
+                <ScalarProperty Name="user_ID" ColumnName="user_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_table">
+            <EntityTypeMapping TypeName="Model.user_table">
+              <MappingFragment StoreEntitySet="user_table">
+                <ScalarProperty Name="user_email" ColumnName="user_email" />
+                <ScalarProperty Name="user_createdDate" ColumnName="user_createdDate" />
+                <ScalarProperty Name="user_loginDate" ColumnName="user_loginDate" />
+                <ScalarProperty Name="user_ID" ColumnName="user_ID" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+                <ScalarProperty Name="user_password" ColumnName="user_password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

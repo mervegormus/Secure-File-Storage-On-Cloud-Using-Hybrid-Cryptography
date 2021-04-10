@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="admin_table">
+    <Key>
+      <PropertyRef Name="admin_ID" />
+    </Key>
+    <Property Name="admin_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="admin_name" Type="nvarchar" MaxLength="50" />
+    <Property Name="admin_password" Type="nvarchar" MaxLength="50" />
+    <Property Name="document_ID" Type="int" />
+    <Property Name="admin_loginDate" Type="nvarchar" MaxLength="20" />
+    <Property Name="admin_createdDate" Type="nvarchar" MaxLength="20" />
+    <Property Name="admin_email" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="document_table">
+    <Key>
+      <PropertyRef Name="document_ID" />
+    </Key>
+    <Property Name="document_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="document_content" Type="varbinary(max)" />
+    <Property Name="document_created_date" Type="nvarchar" MaxLength="50" />
+    <Property Name="document_extension" Type="nvarchar" MaxLength="50" />
+    <Property Name="user_ID" Type="int" />
+    <Property Name="document_keyAes" Type="nvarchar(max)" />
+    <Property Name="document_keyDes" Type="nvarchar(max)" />
+    <Property Name="document_keyRc2" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="user_table">
+    <Key>
+      <PropertyRef Name="user_ID" />
+    </Key>
+    <Property Name="user_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="user_name" Type="nvarchar" MaxLength="50" />
+    <Property Name="user_password" Type="nvarchar" MaxLength="50" />
+    <Property Name="user_loginDate" Type="nvarchar" MaxLength="20" />
+    <Property Name="user_createdDate" Type="nvarchar" MaxLength="20" />
+    <Property Name="user_email" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_admin_table_document_table">
+    <End Role="document_table" Type="Self.document_table" Multiplicity="0..1" />
+    <End Role="admin_table" Type="Self.admin_table" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="document_table">
+        <PropertyRef Name="document_ID" />
+      </Principal>
+      <Dependent Role="admin_table">
+        <PropertyRef Name="document_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_document_table_user_table">
+    <End Role="user_table" Type="Self.user_table" Multiplicity="0..1" />
+    <End Role="document_table" Type="Self.document_table" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="user_table">
+        <PropertyRef Name="user_ID" />
+      </Principal>
+      <Dependent Role="document_table">
+        <PropertyRef Name="user_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ModelStoreContainer">
+    <EntitySet Name="admin_table" EntityType="Self.admin_table" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="document_table" EntityType="Self.document_table" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="user_table" EntityType="Self.user_table" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_admin_table_document_table" Association="Self.FK_admin_table_document_table">
+      <End Role="document_table" EntitySet="document_table" />
+      <End Role="admin_table" EntitySet="admin_table" />
+    </AssociationSet>
+    <AssociationSet Name="FK_document_table_user_table" Association="Self.FK_document_table_user_table">
+      <End Role="user_table" EntitySet="user_table" />
+      <End Role="document_table" EntitySet="document_table" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

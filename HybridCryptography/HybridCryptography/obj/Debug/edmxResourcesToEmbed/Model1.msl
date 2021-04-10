@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Hybrid_CryptographyEntities">
+    <EntitySetMapping Name="admin_table">
+      <EntityTypeMapping TypeName="Model.admin_table">
+        <MappingFragment StoreEntitySet="admin_table">
+          <ScalarProperty Name="admin_email" ColumnName="admin_email" />
+          <ScalarProperty Name="admin_createdDate" ColumnName="admin_createdDate" />
+          <ScalarProperty Name="admin_loginDate" ColumnName="admin_loginDate" />
+          <ScalarProperty Name="admin_ID" ColumnName="admin_ID" />
+          <ScalarProperty Name="admin_name" ColumnName="admin_name" />
+          <ScalarProperty Name="admin_password" ColumnName="admin_password" />
+          <ScalarProperty Name="document_ID" ColumnName="document_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="document_table">
+      <EntityTypeMapping TypeName="Model.document_table">
+        <MappingFragment StoreEntitySet="document_table">
+          <ScalarProperty Name="document_keyRc2" ColumnName="document_keyRc2" />
+          <ScalarProperty Name="document_keyDes" ColumnName="document_keyDes" />
+          <ScalarProperty Name="document_keyAes" ColumnName="document_keyAes" />
+          <ScalarProperty Name="document_ID" ColumnName="document_ID" />
+          <ScalarProperty Name="document_content" ColumnName="document_content" />
+          <ScalarProperty Name="document_created_date" ColumnName="document_created_date" />
+          <ScalarProperty Name="document_extension" ColumnName="document_extension" />
+          <ScalarProperty Name="user_ID" ColumnName="user_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="user_table">
+      <EntityTypeMapping TypeName="Model.user_table">
+        <MappingFragment StoreEntitySet="user_table">
+          <ScalarProperty Name="user_email" ColumnName="user_email" />
+          <ScalarProperty Name="user_createdDate" ColumnName="user_createdDate" />
+          <ScalarProperty Name="user_loginDate" ColumnName="user_loginDate" />
+          <ScalarProperty Name="user_ID" ColumnName="user_ID" />
+          <ScalarProperty Name="user_name" ColumnName="user_name" />
+          <ScalarProperty Name="user_password" ColumnName="user_password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
